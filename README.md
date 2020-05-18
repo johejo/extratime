@@ -1,6 +1,6 @@
 # extratime
 
-Extra time packages for unmarshalling and marshalling json and xml.
+A extra time package for unmarshalling and marshalling json and xml.
 
 ## Supported Formats
 
