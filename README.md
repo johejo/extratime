@@ -1,6 +1,6 @@
 # extratime
 
-A extra time package for unmarshalling and marshalling json and xml.
+An extra time package for unmarshalling and marshalling json and xml.
 
 [![ci](https://github.com/johejo/extratime/workflows/ci/badge.svg)](https://github.com/johejo/extratime/actions?query=workflow%3Aci)
 [![codecov](https://codecov.io/gh/johejo/extratime/branch/master/graph/badge.svg)](https://codecov.io/gh/johejo/extratime)
@@ -53,7 +53,8 @@ func main() {
 
     // json
     const j = `{"t": "Mon, 02 Jan 2006 15:04:05 MST"}`
-    if err := json.Unmarshal([]byte(x), &a); err != nil {
+    var m map[string]extratime.RFC1123
+    if err := json.Unmarshal([]byte(x), &m); err != nil {
         panic(err)
     }
     jb, err := xml.Marshal(a)
