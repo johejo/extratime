@@ -1,6 +1,6 @@
 # extratime
 
-An extra time package for unmarshalling and marshalling json and xml.
+An extra package for unmarshalling and marshalling time format to json and xml.
 
 [![ci](https://github.com/johejo/extratime/workflows/ci/badge.svg)](https://github.com/johejo/extratime/actions?query=workflow%3Aci)
 [![codecov](https://codecov.io/gh/johejo/extratime/branch/master/graph/badge.svg)](https://codecov.io/gh/johejo/extratime)
