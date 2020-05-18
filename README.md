@@ -2,6 +2,8 @@
 
 A extra time package for unmarshalling and marshalling json and xml.
 
+[![ci](https://github.com/johejo/extratime/workflows/ci/badge.svg)](https://github.com/johejo/extratime/actions?query=workflow%3Aci)
+
 ## Supported Formats
 
 - RFC1123
