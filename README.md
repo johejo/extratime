@@ -5,6 +5,7 @@ An extra time package for unmarshalling and marshalling json and xml.
 [![ci](https://github.com/johejo/extratime/workflows/ci/badge.svg)](https://github.com/johejo/extratime/actions?query=workflow%3Aci)
 [![codecov](https://codecov.io/gh/johejo/extratime/branch/master/graph/badge.svg)](https://codecov.io/gh/johejo/extratime)
 [![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/johejo/extratime)
+[![Go Report Card](https://goreportcard.com/badge/johejo/extratime)](https://goreportcard.com/report/johejo/extratime)
 
 ## Supported Formats
 
@@ -69,3 +70,11 @@ func Example() {
 	// {"t":"Mon, 02 Jan 2006 15:04:05 MST"}
 }
 ```
+
+## License
+
+MIT
+
+## Author
+
+Mitsuo Heijo (@johejo)
