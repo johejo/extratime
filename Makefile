@@ -1,0 +1,3 @@
+.PHONY: test
+test:
+	go test -cover -coverprofile coverage.txt -race -count 1 -v ./...
