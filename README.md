@@ -3,6 +3,7 @@
 A extra time package for unmarshalling and marshalling json and xml.
 
 [![ci](https://github.com/johejo/extratime/workflows/ci/badge.svg)](https://github.com/johejo/extratime/actions?query=workflow%3Aci)
+[![codecov](https://codecov.io/gh/johejo/extratime/branch/master/graph/badge.svg)](https://codecov.io/gh/johejo/extratime)
 
 ## Supported Formats
 
@@ -11,6 +12,12 @@ A extra time package for unmarshalling and marshalling json and xml.
 - RFC822
 - RFC822Z
 - Kitchen
+
+## Install
+
+```
+go get github.com/johejo/extratime
+```
 
 ## Example
 
