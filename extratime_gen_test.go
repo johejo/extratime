@@ -65,6 +65,15 @@ func TestKitchen_json(t *testing.T) {
 	assert.Nil(t, err)
 	assert.JSONEq(t, j, string(b))
 }
+func TestRubyDate_json(t *testing.T) {
+	const j = `{"t": "` + time.RubyDate + `"}`
+	t.Log(j)
+	var m map[string]RubyDate
+	assert.NoError(t, json.Unmarshal([]byte(j), &m))
+	b, err := json.Marshal(m)
+	assert.Nil(t, err)
+	assert.JSONEq(t, j, string(b))
+}
 func TestRFC1123_xml(t *testing.T) {
 	type A struct {
 		XMLName xml.Name `xml:"a"`
@@ -147,6 +156,21 @@ func TestKitchen_xml(t *testing.T) {
 		B       Kitchen  `xml:"b"`
 	}
 	const v = time.Kitchen
+	x := `<a><b>` + v + `</b></a>`
+	t.Log(x)
+	var a A
+	assert.NoError(t, xml.Unmarshal([]byte(x), &a))
+	b, err := xml.Marshal(a)
+	assert.Nil(t, err)
+	assert.Equal(t, x, string(b))
+}
+func TestRubyDate_xml(t *testing.T) {
+	type A struct {
+		XMLName xml.Name `xml:"a"`
+		Text    string   `xml:",chardata"`
+		B       RubyDate `xml:"b"`
+	}
+	const v = time.RubyDate
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A

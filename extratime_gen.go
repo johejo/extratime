@@ -16,6 +16,7 @@ type (
 	RFC822Z  Time
 	RFC850   Time
 	Kitchen  Time
+	RubyDate Time
 )
 
 var (
@@ -43,6 +44,10 @@ var (
 	_ json.Marshaler   = (*Kitchen)(nil)
 	_ xml.Unmarshaler  = (*Kitchen)(nil)
 	_ xml.Marshaler    = (*Kitchen)(nil)
+	_ json.Unmarshaler = (*RubyDate)(nil)
+	_ json.Marshaler   = (*RubyDate)(nil)
+	_ xml.Unmarshaler  = (*RubyDate)(nil)
+	_ xml.Marshaler    = (*RubyDate)(nil)
 )
 
 func (i RFC1123) MarshalJSON() ([]byte, error) {
@@ -199,5 +204,31 @@ func (i *Kitchen) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 		return err
 	}
 	*i = Kitchen(t)
+	return nil
+}
+func (i RubyDate) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + Time(i).Format(time.RubyDate) + `"`), nil
+}
+func (i RubyDate) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(Time(i).Format(time.RubyDate), start)
+}
+func (i *RubyDate) UnmarshalJSON(data []byte) error {
+	t, err := time.Parse(time.RubyDate, cut(data))
+	if err != nil {
+		return err
+	}
+	*i = RubyDate(t)
+	return nil
+}
+func (i *RubyDate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	var s string
+	if err := d.DecodeElement(&s, &start); err != nil {
+		return err
+	}
+	t, err := time.Parse(time.RubyDate, s)
+	if err != nil {
+		return err
+	}
+	*i = RubyDate(t)
 	return nil
 }

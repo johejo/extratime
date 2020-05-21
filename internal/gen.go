@@ -43,6 +43,7 @@ func _main() error {
 		"RFC822Z",
 		"RFC850",
 		"Kitchen",
+		"RubyDate",
 	}
 
 	b := bytes.NewBuffer(nil)
