@@ -14,6 +14,8 @@ An extra package for unmarshalling and marshalling time format to json and xml.
 - RFC822
 - RFC822Z
 - Kitchen
+- RubyDate
+- UnixTimeStamp
 
 ## Install
 

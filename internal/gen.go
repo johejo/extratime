@@ -36,14 +36,18 @@ func main() {
 }
 
 func _main() error {
-	layouts := []string{
-		"RFC1123",
-		"RFC1123Z",
-		"RFC822",
-		"RFC822Z",
-		"RFC850",
-		"Kitchen",
-		"RubyDate",
+	layouts := []struct {
+		name    string
+		genImpl bool
+	}{
+		{"RFC1123", true},
+		{"RFC1123Z", true},
+		{"RFC822", true},
+		{"RFC822Z", true},
+		{"RFC850", true},
+		{"Kitchen", true},
+		{"RubyDate", true},
+		{"UnixTimeStamp", false},
 	}
 
 	b := bytes.NewBuffer(nil)
@@ -55,7 +59,8 @@ func _main() error {
 	// type alias and named type
 	fprintf(b, "type (")
 	fprintf(b, "    Time = time.Time")
-	for _, l := range layouts {
+	for _, layout := range layouts {
+		l := layout.name
 		fprintf(b, "%s Time", l)
 	}
 	fprintf(b, ")")
@@ -70,7 +75,8 @@ func _main() error {
 	}
 	// interface checker
 	fprintf(b, "var (")
-	for _, l := range layouts {
+	for _, layout := range layouts {
+		l := layout.name
 		for _, p := range pkgs {
 			for _, i := range ifs {
 				fprintf(b, "_ %s.%s = (*%s)(nil)", p, i, l)
@@ -94,7 +100,11 @@ func _main() error {
 	sort.Strings(keys)
 
 	// implements
-	for _, l := range layouts {
+	for _, layout := range layouts {
+		if !layout.genImpl {
+			continue
+		}
+		l := layout.name
 		for _, k := range keys {
 			inf := interfaces[k]
 			var rt string
@@ -135,7 +145,11 @@ func _main() error {
 	fprintf(t, "//go:generate go run internal/gen.go")
 	fprintf(t, `import "github.com/stretchr/testify/assert"`)
 
-	for _, l := range layouts {
+	for _, layout := range layouts {
+		if !layout.genImpl {
+			continue
+		}
+		l := layout.name
 		fprintf(t, "func Test%s_json(t *testing.T) {", l)
 		fprintf(t, "    const j = `{\"t\": \"`+time.%s+`\"}`", l)
 		fprintf(t, "    t.Log(j)")
@@ -147,7 +161,11 @@ func _main() error {
 		fprintf(t, "}")
 	}
 
-	for _, l := range layouts {
+	for _, layout := range layouts {
+		if !layout.genImpl {
+			continue
+		}
+		l := layout.name
 		fprintf(t, "func Test%s_xml(t *testing.T) {", l)
 		fprintf(t, "    type A struct {")
 		fprintf(t, "        XMLName xml.Name `xml:\"a\"`")
