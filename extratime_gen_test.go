@@ -5,7 +5,6 @@ package extratime
 import (
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
 	"testing"
 	"time"
 
@@ -13,7 +12,7 @@ import (
 )
 
 func TestRFC1123_json(t *testing.T) {
-	j := fmt.Sprintf(`{"t": "` + time.RFC1123 + `"}`)
+	const j = `{"t": "` + time.RFC1123 + `"}`
 	t.Log(j)
 	var m map[string]RFC1123
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -22,7 +21,7 @@ func TestRFC1123_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC1123Z_json(t *testing.T) {
-	j := fmt.Sprintf(`{"t": "` + time.RFC1123Z + `"}`)
+	const j = `{"t": "` + time.RFC1123Z + `"}`
 	t.Log(j)
 	var m map[string]RFC1123Z
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -31,7 +30,7 @@ func TestRFC1123Z_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC822_json(t *testing.T) {
-	j := fmt.Sprintf(`{"t": "` + time.RFC822 + `"}`)
+	const j = `{"t": "` + time.RFC822 + `"}`
 	t.Log(j)
 	var m map[string]RFC822
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -40,7 +39,7 @@ func TestRFC822_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC822Z_json(t *testing.T) {
-	j := fmt.Sprintf(`{"t": "` + time.RFC822Z + `"}`)
+	const j = `{"t": "` + time.RFC822Z + `"}`
 	t.Log(j)
 	var m map[string]RFC822Z
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -49,7 +48,7 @@ func TestRFC822Z_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC850_json(t *testing.T) {
-	j := fmt.Sprintf(`{"t": "` + time.RFC850 + `"}`)
+	const j = `{"t": "` + time.RFC850 + `"}`
 	t.Log(j)
 	var m map[string]RFC850
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -58,7 +57,7 @@ func TestRFC850_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestKitchen_json(t *testing.T) {
-	j := fmt.Sprintf(`{"t": "` + time.Kitchen + `"}`)
+	const j = `{"t": "` + time.Kitchen + `"}`
 	t.Log(j)
 	var m map[string]Kitchen
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -72,7 +71,7 @@ func TestRFC1123_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC1123  `xml:"b"`
 	}
-	v := time.RFC1123
+	const v = time.RFC1123
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -87,7 +86,7 @@ func TestRFC1123Z_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC1123Z `xml:"b"`
 	}
-	v := time.RFC1123Z
+	const v = time.RFC1123Z
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -102,7 +101,7 @@ func TestRFC822_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC822   `xml:"b"`
 	}
-	v := time.RFC822
+	const v = time.RFC822
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -117,7 +116,7 @@ func TestRFC822Z_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC822Z  `xml:"b"`
 	}
-	v := time.RFC822Z
+	const v = time.RFC822Z
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -132,7 +131,7 @@ func TestRFC850_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC850   `xml:"b"`
 	}
-	v := time.RFC850
+	const v = time.RFC850
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -147,7 +146,7 @@ func TestKitchen_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       Kitchen  `xml:"b"`
 	}
-	v := time.Kitchen
+	const v = time.Kitchen
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A

@@ -120,10 +120,8 @@ func _main() error {
 				fprintf(b, "if err != nil { return err }")
 				fprintf(b, "*i = %s(t)", l)
 				fprintf(b, "return nil")
-			case "UnmarshalYAML":
-				fprintf(b, "return nil")
-			case "MarshalYAML":
-				fprintf(b, "return nil, nil")
+			default:
+				return fmt.Errorf("unsupported method: %s", k)
 			}
 			fprintf(b, "}")
 		}
@@ -138,7 +136,7 @@ func _main() error {
 
 	for _, l := range layouts {
 		fprintf(t, "func Test%s_json(t *testing.T) {", l)
-		fprintf(t, "    j := fmt.Sprintf(`{\"t\": \"`+time.%s+`\"}`)", l)
+		fprintf(t, "    const j = `{\"t\": \"`+time.%s+`\"}`", l)
 		fprintf(t, "    t.Log(j)")
 		fprintf(t, "    var m map[string]%s", l)
 		fprintf(t, "    assert.NoError(t, json.Unmarshal([]byte(j), &m))")
@@ -155,7 +153,7 @@ func _main() error {
 		fprintf(t, "        Text    string   `xml:\",chardata\"`")
 		fprintf(t, "        B       %s       `xml:\"b\"`", l)
 		fprintf(t, "    }")
-		fprintf(t, `    v := time.%s`, l)
+		fprintf(t, `    const v = time.%s`, l)
 		fprintf(t, "    x := `<a><b>`+v+`</b></a>`")
 		fprintf(t, "    t.Log(x)")
 		fprintf(t, "    var a A")
