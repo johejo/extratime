@@ -33,5 +33,5 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
       - run: |
-          make test
+          go test -cover -coverprofile coverage.txt -race -v ./...
       - uses: codecov/codecov-action@v1
