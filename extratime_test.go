@@ -61,7 +61,7 @@ func TestUnixTimeStamp_json(t *testing.T) {
 	})
 }
 
-func Test_cut(t *testing.T) {
+func Test_trim(t *testing.T) {
 	tests := []struct {
 		in, out string
 	}{
@@ -70,7 +70,7 @@ func Test_cut(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.in+`->`+tt.out, func(t *testing.T) {
-			got := cut([]byte(tt.in))
+			got := trim([]byte(tt.in))
 			assert.Equal(t, tt.out, got)
 		})
 	}

@@ -9,15 +9,15 @@ import (
 )
 
 func (u UnixTimeStamp) MarshalJSON() ([]byte, error) {
-	return []byte(`"` + strconv.FormatInt(Time(u).Unix(), 10) + `"`), nil
+	return []byte(`"` + strconv.FormatInt(u.Time().Unix(), 10) + `"`), nil
 }
 
 func (u UnixTimeStamp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	return e.EncodeElement(strconv.FormatInt(Time(u).Unix(), 10), start)
+	return e.EncodeElement(strconv.FormatInt(u.Time().Unix(), 10), start)
 }
 
 func (u *UnixTimeStamp) UnmarshalJSON(data []byte) error {
-	i, err := strconv.ParseInt(cut(data), 10, 64)
+	i, err := strconv.ParseInt(trim(data), 10, 64)
 	if err != nil {
 		return err
 	}
@@ -38,6 +38,6 @@ func (u *UnixTimeStamp) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 	return nil
 }
 
-func cut(b []byte) string {
-	return strings.TrimSuffix(strings.TrimPrefix(string(b), `"`), `"`)
+func trim(b []byte) string {
+	return strings.Trim(string(b), `"`)
 }

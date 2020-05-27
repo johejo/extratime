@@ -58,10 +58,9 @@ func _main() error {
 
 	// type alias and named type
 	fprintf(b, "type (")
-	fprintf(b, "    Time = time.Time")
 	for _, layout := range layouts {
 		l := layout.name
-		fprintf(b, "%s Time", l)
+		fprintf(b, "%s time.Time", l)
 	}
 	fprintf(b, ")")
 
@@ -101,10 +100,16 @@ func _main() error {
 
 	// implements
 	for _, layout := range layouts {
+		l := layout.name
+
+		// Time method
+		fprintf(b, "func (t *%s) Time() time.Time {", l)
+		fprintf(b, "    return time.Time(*t)")
+		fprintf(b, "}")
+
 		if !layout.genImpl {
 			continue
 		}
-		l := layout.name
 		for _, k := range keys {
 			inf := interfaces[k]
 			var rt string
@@ -113,23 +118,23 @@ func _main() error {
 			} else {
 				rt = "*"
 			}
-			fprintf(b, "func (i %s%s) %s(%s) %s {", rt, l, k, inf.in, inf.out)
+			fprintf(b, "func (t %s%s) %s(%s) %s {", rt, l, k, inf.in, inf.out)
 			switch k {
 			case "UnmarshalJSON":
-				fprintf(b, "t, err := time.Parse(time.%s, cut(data))", l)
+				fprintf(b, "tt, err := time.Parse(time.%s, trim(data))", l)
 				fprintf(b, "if err != nil { return err }")
-				fprintf(b, "*i = %s(t)", l)
+				fprintf(b, "*t = %s(tt)", l)
 				fprintf(b, "return nil")
 			case "MarshalJSON":
-				fprintf(b, "return []byte(`\"`+Time(i).Format(time.%s)+`\"`), nil", l)
+				fprintf(b, "return []byte(`\"`+t.Time().Format(time.%s)+`\"`), nil", l)
 			case "MarshalXML":
-				fprintf(b, "return e.EncodeElement(Time(i).Format(time.%s), start)", l)
+				fprintf(b, "return e.EncodeElement(t.Time().Format(time.%s), start)", l)
 			case "UnmarshalXML":
 				fprintf(b, "var s string")
 				fprintf(b, "if err := d.DecodeElement(&s, &start); err != nil { return err }")
-				fprintf(b, "t, err := time.Parse(time.%s, s)", l)
+				fprintf(b, "tt, err := time.Parse(time.%s, s)", l)
 				fprintf(b, "if err != nil { return err }")
-				fprintf(b, "*i = %s(t)", l)
+				fprintf(b, "*t = %s(tt)", l)
 				fprintf(b, "return nil")
 			default:
 				return fmt.Errorf("unsupported method: %s", k)
