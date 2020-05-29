@@ -9,7 +9,7 @@ import (
 )
 
 func (u UnixTimeStamp) MarshalJSON() ([]byte, error) {
-	return []byte(`"` + strconv.FormatInt(u.Time().Unix(), 10) + `"`), nil
+	return []byte(strconv.FormatInt(u.Time().Unix(), 10)), nil
 }
 
 func (u UnixTimeStamp) MarshalXML(e *xml.Encoder, start xml.StartElement) error {

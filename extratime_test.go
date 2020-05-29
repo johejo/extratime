@@ -3,6 +3,7 @@ package extratime
 import (
 	"encoding/json"
 	"encoding/xml"
+	"fmt"
 	"strconv"
 	"testing"
 	"time"
@@ -18,7 +19,7 @@ func TestUnixTimeStamp_xml(t *testing.T) {
 	}
 	t.Run("Unix", func(t *testing.T) {
 		v := time.Date(2020, 5, 20, 1, 23, 44, 33, time.Local).Unix()
-		x := `<a><b>` + strconv.FormatInt(v, 10) + `</b></a>`
+		x := fmt.Sprintf(`<a><b>%s</b></a>`, strconv.FormatInt(v, 10))
 		t.Log(x)
 		var a A
 		assert.NoError(t, xml.Unmarshal([]byte(x), &a))
@@ -28,7 +29,7 @@ func TestUnixTimeStamp_xml(t *testing.T) {
 	})
 	t.Run("UnixNano", func(t *testing.T) {
 		v := time.Date(2020, 5, 20, 1, 23, 44, 33, time.Local).UnixNano()
-		x := `<a><b>` + strconv.FormatInt(v, 10) + `</b></a>`
+		x := fmt.Sprintf(`<a><b>%s</b></a>`, strconv.FormatInt(v, 10))
 		t.Log(x)
 		var a A
 		assert.NoError(t, xml.Unmarshal([]byte(x), &a))
@@ -41,23 +42,62 @@ func TestUnixTimeStamp_xml(t *testing.T) {
 func TestUnixTimeStamp_json(t *testing.T) {
 	t.Run("Unix", func(t *testing.T) {
 		v := time.Date(2020, 5, 20, 1, 23, 44, 33, time.Local).Unix()
-		j := `{"t": "` + strconv.FormatInt(v, 10) + `"}`
-		t.Log(j)
-		var m map[string]UnixTimeStamp
-		assert.NoError(t, json.Unmarshal([]byte(j), &m))
-		b, err := json.Marshal(m)
-		assert.Nil(t, err)
-		assert.JSONEq(t, j, string(b))
+		vint := strconv.FormatInt(v, 10)
+		want := fmt.Sprintf(`{"t": %s}`, vint)
+
+		tests := []struct {
+			name string
+			j    string
+		}{
+			{
+				name: "as string",
+				j:    fmt.Sprintf(`{"t": "%s"}`, vint), // with double quote
+			},
+			{
+				name: "as number",
+				j:    fmt.Sprintf(`{"t": %s}`, vint),
+			},
+		}
+
+		for _, tt := range tests {
+			t.Run(tt.name, func(t *testing.T) {
+				var m map[string]UnixTimeStamp
+				assert.NoError(t, json.Unmarshal([]byte(tt.j), &m))
+				b, err := json.Marshal(m)
+				assert.Nil(t, err)
+				assert.JSONEq(t, want, string(b))
+			})
+		}
 	})
-	t.Run("UnixName", func(t *testing.T) {
+
+	t.Run("UnixNano", func(t *testing.T) {
 		v := time.Date(2020, 5, 20, 1, 23, 44, 33, time.Local).UnixNano()
-		j := `{"t": "` + strconv.FormatInt(v, 10) + `"}`
-		t.Log(j)
-		var m map[string]UnixTimeStamp
-		assert.NoError(t, json.Unmarshal([]byte(j), &m))
-		b, err := json.Marshal(m)
-		assert.Nil(t, err)
-		assert.JSONEq(t, j, string(b))
+		vint := strconv.FormatInt(v, 10)
+		want := fmt.Sprintf(`{"t": %s}`, vint)
+
+		tests := []struct {
+			name string
+			j    string
+		}{
+			{
+				name: "as string",
+				j:    fmt.Sprintf(`{"t": "%s"}`, vint), // with double quote
+			},
+			{
+				name: "as number",
+				j:    fmt.Sprintf(`{"t": %s}`, vint),
+			},
+		}
+
+		for _, tt := range tests {
+			t.Run(tt.name, func(t *testing.T) {
+				var m map[string]UnixTimeStamp
+				assert.NoError(t, json.Unmarshal([]byte(tt.j), &m))
+				b, err := json.Marshal(m)
+				assert.Nil(t, err)
+				assert.JSONEq(t, want, string(b))
+			})
+		}
 	})
 }
 
