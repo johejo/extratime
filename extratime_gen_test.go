@@ -5,14 +5,33 @@ package extratime
 import (
 	"encoding/json"
 	"encoding/xml"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
+func TestANSIC_json(t *testing.T) {
+	j := `{"t": "` + strings.ReplaceAll(time.ANSIC, "_", " ") + `"}`
+	t.Log(j)
+	var m map[string]ANSIC
+	assert.NoError(t, json.Unmarshal([]byte(j), &m))
+	b, err := json.Marshal(m)
+	assert.Nil(t, err)
+	assert.JSONEq(t, j, string(b))
+}
+func TestUnixDate_json(t *testing.T) {
+	j := `{"t": "` + strings.ReplaceAll(time.UnixDate, "_", " ") + `"}`
+	t.Log(j)
+	var m map[string]UnixDate
+	assert.NoError(t, json.Unmarshal([]byte(j), &m))
+	b, err := json.Marshal(m)
+	assert.Nil(t, err)
+	assert.JSONEq(t, j, string(b))
+}
 func TestRFC1123_json(t *testing.T) {
-	const j = `{"t": "` + time.RFC1123 + `"}`
+	j := `{"t": "` + strings.ReplaceAll(time.RFC1123, "_", " ") + `"}`
 	t.Log(j)
 	var m map[string]RFC1123
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -21,7 +40,7 @@ func TestRFC1123_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC1123Z_json(t *testing.T) {
-	const j = `{"t": "` + time.RFC1123Z + `"}`
+	j := `{"t": "` + strings.ReplaceAll(time.RFC1123Z, "_", " ") + `"}`
 	t.Log(j)
 	var m map[string]RFC1123Z
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -30,7 +49,7 @@ func TestRFC1123Z_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC822_json(t *testing.T) {
-	const j = `{"t": "` + time.RFC822 + `"}`
+	j := `{"t": "` + strings.ReplaceAll(time.RFC822, "_", " ") + `"}`
 	t.Log(j)
 	var m map[string]RFC822
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -39,7 +58,7 @@ func TestRFC822_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC822Z_json(t *testing.T) {
-	const j = `{"t": "` + time.RFC822Z + `"}`
+	j := `{"t": "` + strings.ReplaceAll(time.RFC822Z, "_", " ") + `"}`
 	t.Log(j)
 	var m map[string]RFC822Z
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -48,7 +67,7 @@ func TestRFC822Z_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestRFC850_json(t *testing.T) {
-	const j = `{"t": "` + time.RFC850 + `"}`
+	j := `{"t": "` + strings.ReplaceAll(time.RFC850, "_", " ") + `"}`
 	t.Log(j)
 	var m map[string]RFC850
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -57,7 +76,7 @@ func TestRFC850_json(t *testing.T) {
 	assert.JSONEq(t, j, string(b))
 }
 func TestKitchen_json(t *testing.T) {
-	const j = `{"t": "` + time.Kitchen + `"}`
+	j := `{"t": "` + strings.ReplaceAll(time.Kitchen, "_", " ") + `"}`
 	t.Log(j)
 	var m map[string]Kitchen
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -65,8 +84,44 @@ func TestKitchen_json(t *testing.T) {
 	assert.Nil(t, err)
 	assert.JSONEq(t, j, string(b))
 }
+func TestStamp_json(t *testing.T) {
+	j := `{"t": "` + strings.ReplaceAll(time.Stamp, "_", " ") + `"}`
+	t.Log(j)
+	var m map[string]Stamp
+	assert.NoError(t, json.Unmarshal([]byte(j), &m))
+	b, err := json.Marshal(m)
+	assert.Nil(t, err)
+	assert.JSONEq(t, j, string(b))
+}
+func TestStampMilli_json(t *testing.T) {
+	j := `{"t": "` + strings.ReplaceAll(time.StampMilli, "_", " ") + `"}`
+	t.Log(j)
+	var m map[string]StampMilli
+	assert.NoError(t, json.Unmarshal([]byte(j), &m))
+	b, err := json.Marshal(m)
+	assert.Nil(t, err)
+	assert.JSONEq(t, j, string(b))
+}
+func TestStampMicro_json(t *testing.T) {
+	j := `{"t": "` + strings.ReplaceAll(time.StampMicro, "_", " ") + `"}`
+	t.Log(j)
+	var m map[string]StampMicro
+	assert.NoError(t, json.Unmarshal([]byte(j), &m))
+	b, err := json.Marshal(m)
+	assert.Nil(t, err)
+	assert.JSONEq(t, j, string(b))
+}
+func TestStampNano_json(t *testing.T) {
+	j := `{"t": "` + strings.ReplaceAll(time.StampNano, "_", " ") + `"}`
+	t.Log(j)
+	var m map[string]StampNano
+	assert.NoError(t, json.Unmarshal([]byte(j), &m))
+	b, err := json.Marshal(m)
+	assert.Nil(t, err)
+	assert.JSONEq(t, j, string(b))
+}
 func TestRubyDate_json(t *testing.T) {
-	const j = `{"t": "` + time.RubyDate + `"}`
+	j := `{"t": "` + strings.ReplaceAll(time.RubyDate, "_", " ") + `"}`
 	t.Log(j)
 	var m map[string]RubyDate
 	assert.NoError(t, json.Unmarshal([]byte(j), &m))
@@ -74,13 +129,43 @@ func TestRubyDate_json(t *testing.T) {
 	assert.Nil(t, err)
 	assert.JSONEq(t, j, string(b))
 }
+func TestANSIC_xml(t *testing.T) {
+	type A struct {
+		XMLName xml.Name `xml:"a"`
+		Text    string   `xml:",chardata"`
+		B       ANSIC    `xml:"b"`
+	}
+	v := strings.ReplaceAll(time.ANSIC, "_", " ")
+	x := `<a><b>` + v + `</b></a>`
+	t.Log(x)
+	var a A
+	assert.NoError(t, xml.Unmarshal([]byte(x), &a))
+	b, err := xml.Marshal(a)
+	assert.Nil(t, err)
+	assert.Equal(t, x, string(b))
+}
+func TestUnixDate_xml(t *testing.T) {
+	type A struct {
+		XMLName xml.Name `xml:"a"`
+		Text    string   `xml:",chardata"`
+		B       UnixDate `xml:"b"`
+	}
+	v := strings.ReplaceAll(time.UnixDate, "_", " ")
+	x := `<a><b>` + v + `</b></a>`
+	t.Log(x)
+	var a A
+	assert.NoError(t, xml.Unmarshal([]byte(x), &a))
+	b, err := xml.Marshal(a)
+	assert.Nil(t, err)
+	assert.Equal(t, x, string(b))
+}
 func TestRFC1123_xml(t *testing.T) {
 	type A struct {
 		XMLName xml.Name `xml:"a"`
 		Text    string   `xml:",chardata"`
 		B       RFC1123  `xml:"b"`
 	}
-	const v = time.RFC1123
+	v := strings.ReplaceAll(time.RFC1123, "_", " ")
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -95,7 +180,7 @@ func TestRFC1123Z_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC1123Z `xml:"b"`
 	}
-	const v = time.RFC1123Z
+	v := strings.ReplaceAll(time.RFC1123Z, "_", " ")
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -110,7 +195,7 @@ func TestRFC822_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC822   `xml:"b"`
 	}
-	const v = time.RFC822
+	v := strings.ReplaceAll(time.RFC822, "_", " ")
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -125,7 +210,7 @@ func TestRFC822Z_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC822Z  `xml:"b"`
 	}
-	const v = time.RFC822Z
+	v := strings.ReplaceAll(time.RFC822Z, "_", " ")
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -140,7 +225,7 @@ func TestRFC850_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RFC850   `xml:"b"`
 	}
-	const v = time.RFC850
+	v := strings.ReplaceAll(time.RFC850, "_", " ")
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -155,7 +240,67 @@ func TestKitchen_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       Kitchen  `xml:"b"`
 	}
-	const v = time.Kitchen
+	v := strings.ReplaceAll(time.Kitchen, "_", " ")
+	x := `<a><b>` + v + `</b></a>`
+	t.Log(x)
+	var a A
+	assert.NoError(t, xml.Unmarshal([]byte(x), &a))
+	b, err := xml.Marshal(a)
+	assert.Nil(t, err)
+	assert.Equal(t, x, string(b))
+}
+func TestStamp_xml(t *testing.T) {
+	type A struct {
+		XMLName xml.Name `xml:"a"`
+		Text    string   `xml:",chardata"`
+		B       Stamp    `xml:"b"`
+	}
+	v := strings.ReplaceAll(time.Stamp, "_", " ")
+	x := `<a><b>` + v + `</b></a>`
+	t.Log(x)
+	var a A
+	assert.NoError(t, xml.Unmarshal([]byte(x), &a))
+	b, err := xml.Marshal(a)
+	assert.Nil(t, err)
+	assert.Equal(t, x, string(b))
+}
+func TestStampMilli_xml(t *testing.T) {
+	type A struct {
+		XMLName xml.Name   `xml:"a"`
+		Text    string     `xml:",chardata"`
+		B       StampMilli `xml:"b"`
+	}
+	v := strings.ReplaceAll(time.StampMilli, "_", " ")
+	x := `<a><b>` + v + `</b></a>`
+	t.Log(x)
+	var a A
+	assert.NoError(t, xml.Unmarshal([]byte(x), &a))
+	b, err := xml.Marshal(a)
+	assert.Nil(t, err)
+	assert.Equal(t, x, string(b))
+}
+func TestStampMicro_xml(t *testing.T) {
+	type A struct {
+		XMLName xml.Name   `xml:"a"`
+		Text    string     `xml:",chardata"`
+		B       StampMicro `xml:"b"`
+	}
+	v := strings.ReplaceAll(time.StampMicro, "_", " ")
+	x := `<a><b>` + v + `</b></a>`
+	t.Log(x)
+	var a A
+	assert.NoError(t, xml.Unmarshal([]byte(x), &a))
+	b, err := xml.Marshal(a)
+	assert.Nil(t, err)
+	assert.Equal(t, x, string(b))
+}
+func TestStampNano_xml(t *testing.T) {
+	type A struct {
+		XMLName xml.Name  `xml:"a"`
+		Text    string    `xml:",chardata"`
+		B       StampNano `xml:"b"`
+	}
+	v := strings.ReplaceAll(time.StampNano, "_", " ")
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
@@ -170,7 +315,7 @@ func TestRubyDate_xml(t *testing.T) {
 		Text    string   `xml:",chardata"`
 		B       RubyDate `xml:"b"`
 	}
-	const v = time.RubyDate
+	v := strings.ReplaceAll(time.RubyDate, "_", " ")
 	x := `<a><b>` + v + `</b></a>`
 	t.Log(x)
 	var a A
