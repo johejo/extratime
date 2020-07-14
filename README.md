@@ -9,11 +9,18 @@ An extra package for unmarshalling and marshalling time format to json and xml.
 
 ## Supported Formats
 
+- ANSIC
+- UnixDate
 - RFC1123
 - RFC1123Z
 - RFC822
 - RFC822Z
+- RFC850
 - Kitchen
+- Stamp
+- StampMilli
+- StampMicro
+- StampNano
 - RubyDate
 - UnixTimeStamp
 
